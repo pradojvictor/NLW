@@ -1,8 +1,12 @@
 import * as Dialog from "@radix-ui/react-dialog"
 import { DivWeek, DivYears, Form } from "./style";
+import { useEffect, useState } from "react";
 
 import { styled } from '@stitches/react';
 import { icons } from "../../assets";
+import CheckBox from "../CheckBox";
+import Select from "../Select";
+
 
 
 const Overlay = styled(Dialog.Overlay, {
@@ -35,11 +39,27 @@ const Title = styled(Dialog.Title, {
 
 
 
-interface IModalProps {
-    children?: JSX.Element;
+interface IGamesprops {
+    id: string;
+    title: string;
+    bannerUrl: string;
+    _count: {
+        ads: number;
+    }
 }
 
-export default function ModalAs(props: IModalProps) {
+export default function ModalAs() {
+
+    const [games, setGames] = useState<IGamesprops[]>([])
+
+    useEffect(() => {
+        fetch('http://localhost:3333/games')
+            .then(response => response.json())
+            .then(data => {
+                setGames(data)
+            })
+    }, [])
+
     return (
 
         <Dialog.Root>
@@ -55,7 +75,7 @@ export default function ModalAs(props: IModalProps) {
                     <Form>
                         <div>
                             <label htmlFor="game">Qual o game?</label>
-                            <input id="game" type="text" placeholder="Selecione o game que deseja jogar" />
+                            <Select id={"game"} placeholder={"Selecione o game que deseja jogarjogar"}/>
                         </div>
                         <div>
                             <label htmlFor="name">Seu nome (ou nickname)</label>
@@ -65,34 +85,34 @@ export default function ModalAs(props: IModalProps) {
                             <DivYears>
                                 <div className="test">
                                     <label htmlFor="yearsPlaying">Joga há quantos anos?</label>
-                                    <input id="yearsPlaying" type="number" placeholder="Tudo bem ser ZERO" />
+                                    <input id="yearsPlaying" className="inputyears" type="" placeholder="Tudo bem ser ZERO" />
                                 </div>
                                 <div>
                                     <label htmlFor="discord">Qual seu Discord?</label>
                                     <input id="discord" type="text" placeholder="Usuario#0000" />
                                 </div>
                             </DivYears>
+
                             <DivWeek>
-                                <div>
+                                <div className="weekdays">
                                     <label htmlFor="weekDays">Quando costuma jogar?</label>
                                 </div>
-                                <section>
+                                <section className="weekstart">
                                     <label htmlFor="hourStart">Qual horário do dia?</label>
-                                    <div>
+                                    <div className="weekhours">
                                         <input id="hourStart" type="time" placeholder="De" />
                                         <input id="hourEnd" type="time" placeholder="Até" />
                                     </div>
                                 </section>
                             </DivWeek>
-                        </div>
-                        <div>
-                            <input type="checkbox" />
-                            Constumo me conectar ao chat de voz
+
                         </div>
 
+                        <CheckBox />
+
                         <footer>
-                            <button>Cancelar</button>
-                            <button type="submit">
+                            <Dialog.Close className="buttoncancel">Cancelar</Dialog.Close>
+                            <button className="buttonsubmit" type="submit">
                                 <img src={icons.gamepad} />
                                 Encontrar duo
                             </button>
@@ -105,4 +125,3 @@ export default function ModalAs(props: IModalProps) {
     )
 }
 
-//0:45 antigo

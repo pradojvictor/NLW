@@ -8,6 +8,7 @@ import game6 from "./images/game06.png"
 
 import search from "./icons/search.svg"
 import gamepad from  "./icons/gamepad.svg"
+import check from "./icons/check.svg"
 
 
 
@@ -24,4 +25,5 @@ export const images = {
 export const icons = {
     search,
     gamepad,
+    check,
 }

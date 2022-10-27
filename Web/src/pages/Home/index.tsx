@@ -1,6 +1,5 @@
-import * as Dialog from "@radix-ui/react-dialog";
 import { useEffect, useState } from "react";
-import { icons, images } from "../../assets";
+import {  images } from "../../assets";
 import CardGame from "../../components/CardGame";
 import ModalAs from "../../components/ModalAds";
 import { Div, Grid, Section } from "./style";
